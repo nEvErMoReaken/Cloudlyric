@@ -13,6 +13,7 @@ headers = {
 }
 
 def get_list(artist_id):
+
 	url = "http://music.163.com/playlist?id="+str(artist_id)
 
 	s = requests.session()
@@ -24,13 +25,13 @@ def get_list(artist_id):
 	main = main.find_all('a')
 
 	song = {}
-	song['playlist_name'] = artist_name.text
+	song['playlist_name'] = artist_name.text#.text方法
 	song['list'] = main
-
 	return song
 
 
 def get_lyric(song_id):
+    #根据歌曲id获取歌词
     list = song_id.split('=')
     id = list[1]
     url = "http://music.163.com/api/song/lyric?id=" + str(id) + "&lv=1&kv=1&tv=-1"
@@ -60,6 +61,7 @@ def makedir(dir_name):
     return dir_name
 
 def ConvertStrToFile(dir_name, filename, str):
+    #歌词写入txt文件
     if (str == ""):
         return
     filename = filename.replace('/', '')
@@ -87,7 +89,7 @@ def ConvertStrToFile(dir_name, filename, str):
 
 def get_list_lyric(playlist_id):
     songlist = get_list(playlist_id)
-    print(songlist)
+    print("ok",songlist)
     playlist_name = songlist['playlist_name']
     idlist = songlist['list']
 
@@ -95,9 +97,9 @@ def get_list_lyric(playlist_id):
 
     for music in idlist:
         ConvertStrToFile(playlist_name, music.text, get_lyric(music['href']))
-        print("File " + music.text + " is writing on the disk")
+        print("曲目： " + music.text + "  的歌词获取成功")
 
-    print("All files have created successfully")
+    print("所有文件都获取成功了")
 
     return dir
 

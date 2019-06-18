@@ -62,5 +62,6 @@ def get_words_freq(stopwords, lyrics_dir):
 if __name__ == '__main__':
     stop_words = load_stopwords()
     words_freq = get_words_freq(stop_words, os.path.join(naming.ProjectPath, naming.LyricsDirectory))
+    print(words_freq)
     with open(r"C:\Users\admin\PycharmProjects\Cloudlyric\data\dirtydata.json","w",encoding='utf-8') as f:
         json.dump(words_freq,f)
